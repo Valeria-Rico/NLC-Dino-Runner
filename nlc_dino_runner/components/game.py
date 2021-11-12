@@ -18,15 +18,16 @@ class Game:
         self.game_speed = 20
         self.clock = pygame.time.Clock()
         self.player = Dinosaur()
-        self.obstacle = ObstacleManager()
+        self.obstacle_manager = ObstacleManager()
         self.points = 0
         self.death_count = 0
+        self.running = True
 
     def score(self):
         self.points += 1
         if self.points % 20 == 0:
             self.game_speed += 1
-        score_element, score_element_rec = text_utils.get_score_elements(self.points)
+        score_element, score_element_rec = text_utils.get_score_element(self.points)
         self.screen.blit(score_element, score_element_rec)
 
     def show_menu(self):
@@ -39,12 +40,19 @@ class Game:
     def print_menu_elements(self):
         half_width = SCREEN_WIDTH // 2
         half_height = SCREEN_WIDTH // 2
-        text_element, text_element_rec = text_utils.get_centered_message("Press any key to start")
-        self.screen.blit(text_element, text_element_rec)
-        text_element, text_element_rec = text_utils.get_centered_message("Death count: " + str(self.death_count),
-                                                                         height=half_height + 50)
-        self.screen.blit(text_element, text_element_rec)
-        self.screen.blit(ICON, (half_width - 40, half_height - 150))
+        if self.death_count == 0:
+            text_element, text_element_rec = text_utils.get_centered_message("Press any key to start")
+            self.screen.blit(text_element, text_element_rec)
+        else:
+            text_element, text_element_rec = text_utils.get_centered_message("Press any key to Restart")
+            self.screen.blit(text_element, text_element_rec)
+            text_element, text_element_rec = text_utils.get_centered_message("Death count: " + str(self.death_count),
+                                                                             height=half_height + -150)
+            self.screen.blit(text_element, text_element_rec)
+            text_element, text_element_rec = text_utils.get_centered_message("Your Score: " + str(self.points),
+                                                                             height=half_height + -200)
+            self.screen.blit(text_element, text_element_rec)
+        self.screen.blit(ICON, (half_width - 40, half_height - 400))
 
     def handle_key_events_on_menu(self):
         for event in pygame.event.get():
@@ -65,10 +73,8 @@ class Game:
             self.events()
             self.update()
             self.draw()
-        pygame.quit()
 
     def execute(self):
-        self.running = True
         while self.running:
             if not self.playing:
                 self.show_menu()
@@ -81,14 +87,14 @@ class Game:
     def update(self):
         user_input = pygame.key.get_pressed()
         self.player.update(user_input)
-        self.obstacle.update(self)
+        self.obstacle_manager.update(self)
 
     def draw(self):
         self.clock.tick(FPS)
         self.screen.fill((255, 255, 255))
         self.draw_background()
         self.player.draw(self.screen)
-        self.obstacle.draw(self.screen)
+        self.obstacle_manager.draw(self.screen)
         self.score()
         pygame.display.update()
         pygame.display.flip()
