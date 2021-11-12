@@ -5,7 +5,7 @@ from pygame.sprite import Sprite
 
 class Dinosaur(Sprite):
     X_POS = 80
-    Y_POS = 310
+    Y_POS = 320
     Y_POS_DUCK = 340
     JUMP_VEL = 10
 
