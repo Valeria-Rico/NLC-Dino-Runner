@@ -1,6 +1,7 @@
 import pygame
 
 from nlc_dino_runner.components.obstacles.obstacle_manager import ObstacleManager
+from nlc_dino_runner.components.obstacles.powerups.power_up_manager import PowerUpManager
 from nlc_dino_runner.utils import text_utils
 from nlc_dino_runner.utils.constants import TITTLE, ICON, BG, FPS, SCREEN_WIDTH, SCREEN_HEIGHT
 from nlc_dino_runner.components.dinosaur import Dinosaur
@@ -19,6 +20,7 @@ class Game:
         self.clock = pygame.time.Clock()
         self.player = Dinosaur()
         self.obstacle_manager = ObstacleManager()
+        self.power_up_manager = PowerUpManager()
         self.points = 0
         self.death_count = 0
         self.running = True
@@ -29,6 +31,7 @@ class Game:
             self.game_speed += 1
         score_element, score_element_rec = text_utils.get_score_element(self.points)
         self.screen.blit(score_element, score_element_rec)
+        self.player.check_invincibility(self.screen)
 
     def show_menu(self):
         white_color = (255, 255, 255)
@@ -88,6 +91,7 @@ class Game:
         user_input = pygame.key.get_pressed()
         self.player.update(user_input)
         self.obstacle_manager.update(self)
+        self.power_up_manager.update(self.points, self.game_speed, self.player)
 
     def draw(self):
         self.clock.tick(FPS)
@@ -95,6 +99,7 @@ class Game:
         self.draw_background()
         self.player.draw(self.screen)
         self.obstacle_manager.draw(self.screen)
+        self.power_up_manager.draw(self.screen)
         self.score()
         pygame.display.update()
         pygame.display.flip()
@@ -107,3 +112,5 @@ class Game:
             self.screen.blit(BG, (image_with + self.x_pos_bg, self.y_pos_bg))
             self.x_pos_bg = 0
         self.x_pos_bg -= self.game_speed
+
+

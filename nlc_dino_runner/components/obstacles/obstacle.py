@@ -16,4 +16,4 @@ class Obstacle(Sprite):
             obstacles.pop()
 
     def draw(self, screen):
-        screen.blit(self.image[self.index], self.rect)
+        screen.blit(self.image [self.index], self.rect)
