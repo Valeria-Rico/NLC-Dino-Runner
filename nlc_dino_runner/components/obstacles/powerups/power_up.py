@@ -14,6 +14,7 @@ class PowerUp(Sprite):
 
     def update(self, game_speed, powerups):
         self.rect.x -= game_speed
+
         if self.rect.x < -self.rect.width:
             powerups.pop()
 

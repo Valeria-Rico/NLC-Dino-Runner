@@ -4,6 +4,7 @@ from pygame.sprite import Sprite
 
 class Life(Sprite):
     def __init__(self):
+        self.life = []
         self.image = HEART
         self.rect = self.image.get_rect()
         self.rect.x = 10
