@@ -26,7 +26,7 @@ class Game:
         self.points = 0
         self.death_count = 0
         self.running = True
-        self.hearth = Life()
+        self.heart = Life()
 
     def score(self):
         self.points += 1
@@ -111,7 +111,7 @@ class Game:
         self.obstacle_manager.draw(self.screen)
         self.power_up_manager.draw(self.screen)
         self.score()
-        self.hearth.draw(self.screen)
+        self.heart.draw(self.screen)
         self.print_number_lifes()
         pygame.display.update()
         pygame.display.flip()

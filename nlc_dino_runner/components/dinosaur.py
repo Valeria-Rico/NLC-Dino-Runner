@@ -1,6 +1,7 @@
 import pygame
-from nlc_dino_runner.utils.constants import RUNNING, DUCKING, JUMPING, DEFAULT_TYPE, SHIELD_TYPE, DUCKING_SHIELD, \
-    RUNNING_SHIELD, JUMPING_SHIELD
+from nlc_dino_runner.utils.constants import (RUNNING, DUCKING, JUMPING, DEFAULT_TYPE, SHIELD_TYPE, DUCKING_SHIELD,
+                                             RUNNING_SHIELD, JUMPING_SHIELD, RUNNING_HAMMER, JUMPING_HAMMER, DUCKING_HAMMER,
+                                             HAMMER_TYPE, HAMMER)
 from pygame.sprite import Sprite
 
 
@@ -16,9 +17,9 @@ class Dinosaur(Sprite):
     def __init__(self):
         # self.image = RUNNING[0]
 
-        self.run_img = {DEFAULT_TYPE: RUNNING, SHIELD_TYPE: RUNNING_SHIELD}
-        self.duck_img = {DEFAULT_TYPE: DUCKING, SHIELD_TYPE: DUCKING_SHIELD}
-        self.jump_img = {DEFAULT_TYPE: JUMPING, SHIELD_TYPE: JUMPING_SHIELD}
+        self.run_img = {DEFAULT_TYPE: RUNNING, SHIELD_TYPE: RUNNING_SHIELD, HAMMER_TYPE: RUNNING_HAMMER}
+        self.duck_img = {DEFAULT_TYPE: DUCKING, SHIELD_TYPE: DUCKING_SHIELD, HAMMER_TYPE: DUCKING_HAMMER}
+        self.jump_img = {DEFAULT_TYPE: JUMPING, SHIELD_TYPE: JUMPING_SHIELD, HAMMER_TYPE: JUMPING_HAMMER}
         self.type = DEFAULT_TYPE
         self.image = self.run_img[self.type][0]
         self.shield = False
@@ -32,6 +33,9 @@ class Dinosaur(Sprite):
         self.dino_duck = False
         self.dino_jump = False
         self.jum_vel = self.JUMP_VEL
+        self.hammer = False
+        self.hammer_speed = 15
+        # self.throw_hammer = throw_hammer
 
     def update(self, user_input):
         if self.dino_run:
@@ -100,6 +104,17 @@ class Dinosaur(Sprite):
             else:
                 self.shield = False
                 self.update_type_to_default(SHIELD_TYPE)
+
+    def throw_hammer(self, user_input):
+        self.image = HAMMER
+        self.rect = self.image.get_rect()
+        self.rect.x = 300
+        self.hammer_speed = 15
+        if self.hammer:
+            if user_input[pygame.K_SPACE]:
+                self.rect.x += self.hammer_speed
+                if self.rect.x > self.rect.width:
+                    self.image.pop()
 
     def update_type_to_default(self, current_type):
         if self.type == current_type:
