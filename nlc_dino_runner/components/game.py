@@ -59,6 +59,9 @@ class Game:
         if self.death_count == 0:
             text_element, text_element_rec = text_utils.get_centered_message("Press any key to start")
             self.screen.blit(text_element, text_element_rec)
+            pygame.mixer.music.load("Theme_song.mpeg")
+            pygame.mixer.music.play(10)
+            pygame.mixer.music.set_volume(0.5)
         else:
             text_element, text_element_rec = text_utils.get_centered_message("Press any key to Restart")
             self.screen.blit(text_element, text_element_rec)
@@ -68,7 +71,11 @@ class Game:
             text_element, text_element_rec = text_utils.get_centered_message("Your Score: " + str(self.points),
                                                                              height=half_height + -200)
             self.screen.blit(text_element, text_element_rec)
+            pygame.mixer.music.load("Theme_song.mpeg")
+            pygame.mixer.music.play(10)
+            pygame.mixer.music.set_volume(0.5)
         self.screen.blit(ICON, (half_width - 40, half_height - 400))
+
 
     def handle_key_events_on_menu(self):
         for event in pygame.event.get():

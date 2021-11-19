@@ -41,6 +41,9 @@ class ObstacleManager:
                     game.death_count += 1
                     self.lifes = LIFES
                     self.game_speed = 15
+                    pygame.mixer.music.load("Death_sound.mpeg")
+                    pygame.mixer.music.play(1)
+                    pygame.mixer.music.set_volume(0.5)
                     break
 
             if game.power_up_manager.hammer.rect.colliderect(obstacle.rect):
