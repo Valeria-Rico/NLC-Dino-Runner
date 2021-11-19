@@ -70,7 +70,7 @@ HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
 
 ICON = pygame.image.load(os.path.join(IMG_DIR, 'DinoWallpaper.png'))
 
-LIFES = 5
+LIFES = 30
 HAMMERS = 3
 DEFAULT_TYPE = "default"
 SHIELD_TYPE = "shield"

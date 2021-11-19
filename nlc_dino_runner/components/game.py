@@ -29,10 +29,11 @@ class Game:
         self.death_count = 0
         self.running = True
         self.heart = Life()
+        self.game_speed_cloud = 20
 
     def score(self):
         self.points += 1
-        if self.points % 20 == 0:
+        if self.points % 15 == 0:
             self.game_speed += 1
         score_element, score_element_rec = text_utils.get_score_element(self.points)
         self.screen.blit(score_element, score_element_rec)
@@ -135,6 +136,6 @@ class Game:
         if self.x_pos_cloud <= -image_with:
             self.screen.blit(CLOUD, (image_with + self.x_pos_cloud, self.y_pos_cloud))
             self.x_pos_cloud = SCREEN_WIDTH
-        self.x_pos_cloud -= self.game_speed
+        self.x_pos_cloud -= self.game_speed_cloud
 
 
